@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:doori_mobileapp/controllers/authentication_controllers/account_controller.dart';
 import 'package:doori_mobileapp/controllers/base_controller.dart';
 import 'package:doori_mobileapp/controllers/dashboard_controllers/dashboard_controller.dart';
@@ -94,7 +93,8 @@ class ProfileController extends BaseController {
                 "${userModel.name.toString()[0].toUpperCase()}${userModel.name.toString().substring(1).toLowerCase()}";
           }*/
 
-          printf('---register--user--date-->${userModel.dateForRegister} time-->${userModel.time}');
+          printf(
+              '---register--user--date-->${userModel.dateForRegister} time-->${userModel.time}');
 
           username = userModel.name.toString();
 

@@ -1,6 +1,8 @@
+import 'dart:typed_data';
 import 'package:doori_mobileapp/controllers/authentication_controllers/profile_controller.dart';
 import 'package:doori_mobileapp/ui/components/common.dart';
 import 'package:doori_mobileapp/utils/app_constants.dart';
+import 'package:doori_mobileapp/utils/image_upload.dart';
 import 'package:doori_mobileapp/utils/image_paths.dart';
 import 'package:doori_mobileapp/utils/style.dart';
 import 'package:doori_mobileapp/utils/utility.dart';
@@ -16,12 +18,21 @@ import 'package:image_picker/image_picker.dart';
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({Key? key}) : super(key: key);
-
   @override
   State<MyProfileScreen> createState() => _MyProfileScreenState();
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
+  Uint8List? _image;
+  void selectImage() async {
+    Uint8List? img = await ImageUpload().pickImage(ImageSource.gallery);
+    if (img != null) {
+      setState(() {
+        _image = img;
+      });
+    }
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -55,14 +66,43 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Center(
-                              child: Image.asset(
-                                ImagePath.icUserProfile,
-                                height: 70.w,
-                                width: 70.w,
-                                fit: BoxFit.fill,
+                            _image != null
+                                ? Center(
+                                    child: ClipOval(
+                                      child: Image.memory(
+                                        _image!,
+                                        height: 70.w,
+                                        width: 70.w,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : Center(
+                                    child: Image.asset(
+                                      ImagePath.icUserProfile,
+                                      height: 70.w,
+                                      width: 70.w,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                            Positioned(
+                                child: InkWell(
+                              onTap: () {
+                                selectImage();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                  color: Colors.white,
+                                  size: 30.sp,
+                                ),
                               ),
-                            ),
+                            )),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -315,15 +355,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                printf('clicked_upload_profile_adnan');
-              },
-              child: Text('TextButton'),
-            ),
             AppTextField(
               validators: nameValidator,
               controller: controller.textNameController,
