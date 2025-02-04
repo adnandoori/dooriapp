@@ -1,0 +1,604 @@
+{
+  "tips": [
+    {
+      "Tips": "Frequent headaches."
+    },
+    {
+      "Tips": "Dizziness or lightheadedness."
+    },
+    {
+      "Tips": "Nosebleeds."
+    },
+    {
+      "Tips": "Chest pain or discomfort."
+    },
+    {
+      "Tips": "Shortness of breath."
+    },
+    {
+      "Tips": "Blurred vision."
+    },
+    {
+      "Tips": "Fatigue or weakness."
+    },
+    {
+      "Tips": "Irregular heartbeats (arrhythmias)."
+    },
+    {
+      "Tips": "Flushing of the face."
+    },
+    {
+      "Tips": "Pounding in the ears."
+    },
+    {
+      "Tips": "Nausea or vomiting."
+    },
+    {
+      "Tips": "Anxiety or restlessness."
+    },
+    {
+      "Tips": "Difficulty concentrating."
+    },
+    {
+      "Tips": "Sweating excessively."
+    },
+    {
+      "Tips": "Ringing in the ears (tinnitus)."
+    },
+    {
+      "Tips": "Confusion or memory problems."
+    },
+    {
+      "Tips": "Facial flushing."
+    },
+    {
+      "Tips": "Blood spots in the eyes (subconjunctival hemorrhage)."
+    },
+    {
+      "Tips": "Swelling of the ankles and legs (edema)."
+    },
+    {
+      "Tips": "Frequent urination."
+    },
+    {
+      "Tips": "Chest tightness."
+    },
+    {
+      "Tips": "Back pain."
+    },
+    {
+      "Tips": "Numbness or tingling in extremities."
+    },
+    {
+      "Tips": "Palpitations (awareness of heartbeat)."
+    },
+    {
+      "Tips": "Blood in urine."
+    },
+    {
+      "Tips": "Fatigue during physical activity."
+    },
+    {
+      "Tips": "Impaired kidney function."
+    },
+    {
+      "Tips": "Sexual dysfunction."
+    },
+    {
+      "Tips": "Fainting or syncope."
+    },
+    {
+      "Tips": "Difficulty sleeping."
+    },
+    {
+      "Tips": "Muscle twitching."
+    },
+    {
+      "Tips": "Tremors."
+    },
+    {
+      "Tips": "Excessive sweating at night."
+    },
+    {
+      "Tips": "Frequent urination at night (nocturia)."
+    },
+    {
+      "Tips": "Nervousness."
+    },
+    {
+      "Tips": "Irregular menstrual cycles (in women)."
+    },
+    {
+      "Tips": "Cold, clammy skin."
+    },
+    {
+      "Tips": "Weight gain."
+    },
+    {
+      "Tips": "Dry mouth."
+    },
+    {
+      "Tips": "Itchy skin."
+    },
+    {
+      "Tips": "Impaired wound healing."
+    },
+    {
+      "Tips": "Frequent infections."
+    },
+    {
+      "Tips": "Chest pressure or tightness."
+    },
+    {
+      "Tips": "Increased thirst."
+    },
+    {
+      "Tips": "Changes in appetite."
+    },
+    {
+      "Tips": "Reduced exercise tolerance."
+    },
+    {
+      "Tips": "Difficulty speaking or slurred speech."
+    },
+    {
+      "Tips": "Muscle cramps."
+    },
+    {
+      "Tips": "Vision changes."
+    },
+    {
+      "Tips": "Personality changes or irritability."
+    },
+    {
+      "Tips": "Excessive fatigue."
+    },
+    {
+      "Tips": "Brain fog or difficulty concentrating."
+    },
+    {
+      "Tips": "Increased anxiety."
+    },
+    {
+      "Tips": "Pounding or throbbing sensation in the neck."
+    },
+    {
+      "Tips": "Cold fingers or toes."
+    },
+    {
+      "Tips": "Mood swings."
+    },
+    {
+      "Tips": "Increased heart rate."
+    },
+    {
+      "Tips": "Difficulty swallowing."
+    },
+    {
+      "Tips": "Frequent hiccups."
+    },
+    {
+      "Tips": "Sweating excessively, especially on the forehead."
+    },
+    {
+      "Tips": "Abdominal pain."
+    },
+    {
+      "Tips": "Flushed or reddened face."
+    },
+    {
+      "Tips": "Sudden facial numbness or weakness (possible stroke symptom)."
+    },
+    {
+      "Tips": "Vision changes, including spots or floaters."
+    },
+    {
+      "Tips": "Sensitivity to light."
+    },
+    {
+      "Tips": "Altered sense of taste."
+    },
+    {
+      "Tips": "Difficulty hearing or ringing in the ears."
+    },
+    {
+      "Tips": "Slurred speech or difficulty articulating words."
+    },
+    {
+      "Tips": "Rapid eye movement."
+    },
+    {
+      "Tips": "Persistent cough."
+    },
+    {
+      "Tips": "Reduced exercise capacity."
+    },
+    {
+      "Tips": "Swelling or puffiness in the face."
+    },
+    {
+      "Tips": "Feeling of impending doom or anxiety attacks."
+    },
+    {
+      "Tips": "Decreased libido."
+    },
+    {
+      "Tips": "Loss of balance or coordination."
+    },
+    {
+      "Tips": "Dark circles under the eyes."
+    },
+    {
+      "Tips": "Bruising easily."
+    },
+    {
+      "Tips": "Rapid weight loss or gain."
+    },
+    {
+      "Tips": "Joint pain or stiffness."
+    },
+    {
+      "Tips": "Muscle weakness."
+    },
+    {
+      "Tips": "Difficulty breathing during sleep."
+    },
+    {
+      "Tips": "Bloodshot or strained eyes."
+    },
+    {
+      "Tips": "Itchy or dry scalp."
+    },
+    {
+      "Tips": "Dental problems, including gum bleeding."
+    },
+    {
+      "Tips": "Pain in the upper abdomen (epigastric pain)."
+    },
+    {
+      "Tips": "Impaired memory."
+    },
+    {
+      "Tips": "Pulsatile tinnitus (hearing your heartbeat in your ears)."
+    },
+    {
+      "Tips": "Fainting or near-fainting episodes (presyncope)."
+    },
+    {
+      "Tips": "Skin rashes."
+    },
+    {
+      "Tips": "Swelling of the tongue or throat (angioedema)."
+    },
+    {
+      "Tips": "Difficulty swallowing or throat tightness."
+    },
+    {
+      "Tips": "Restless legs syndrome."
+    },
+    {
+      "Tips": "Vertigo (dizziness with a spinning sensation)."
+    },
+    {
+      "Tips": "Abdominal bloating."
+    },
+    {
+      "Tips": "Hemorrhoids."
+    },
+    {
+      "Tips": "Kidney stones."
+    },
+    {
+      "Tips": "Loss of appetite."
+    },
+    {
+      "Tips": "Frequent yawning."
+    },
+    {
+      "Tips": "Frequent burping."
+    },
+    {
+      "Tips": "Chronic fatigue syndrome-like symptoms."
+    },
+    {
+      "Tips": "Skin discoloration (red or purple patches)."
+    },
+    {
+      "Tips": "Excessive thirst."
+    },
+    {
+      "Tips": "Metallic taste in the mouth."
+    },
+    {
+      "Tips": "Shivering or chills."
+    },
+    {
+      "Tips": "Feeling jittery or shaky."
+    },
+    {
+      "Tips": "Paresthesia (tingling or prickling sensations)."
+    },
+    {
+      "Tips": "Vision disturbances, such as double vision."
+    },
+    {
+      "Tips": "Sensation of a tight band around the head."
+    },
+    {
+      "Tips": "Pain or discomfort in the left arm (possible sign of heart strain)."
+    },
+    {
+      "Tips": "Pain or discomfort in the neck or jaw."
+    },
+    {
+      "Tips": "Hair loss or changes in hair texture."
+    },
+    {
+      "Tips": "Cravings for salty foods."
+    },
+    {
+      "Tips": "Changes in nail appearance."
+    },
+    {
+      "Tips": "Bloodshot or irritated eyes."
+    },
+    {
+      "Tips": "Photosensitivity (sensitivity to light)."
+    },
+    {
+      "Tips": "Decreased coordination or clumsiness."
+    },
+    {
+      "Tips": "Frequent sneezing or runny nose."
+    },
+    {
+      "Tips": "Increased mucus production."
+    },
+    {
+      "Tips": "Swelling of the face, lips, or tongue (angioedema)."
+    },
+    {
+      "Tips": "Muscle twitches or spasms."
+    },
+    {
+      "Tips": "Joint swelling or inflammation."
+    },
+    {
+      "Tips": "Leg cramps, especially at night."
+    },
+    {
+      "Tips": "Slow wound healing."
+    },
+    {
+      "Tips": "Persistent cough with blood-tinged sputum."
+    },
+    {
+      "Tips": "Sensation of a lump in the throat."
+    },
+    {
+      "Tips": "Abdominal discomfort or indigestion."
+    },
+    {
+      "Tips": "Loss of bladder control (urinary incontinence)."
+    },
+    {
+      "Tips": "Dry, flaky skin."
+    },
+    {
+      "Tips": "Pain or pressure in the chest."
+    },
+    {
+      "Tips": "Difficulty swallowing solids or liquids."
+    },
+    {
+      "Tips": "Unexplained weight changes."
+    },
+    {
+      "Tips": "Numbness or tingling in the face."
+    },
+    {
+      "Tips": "Loss of consciousness (fainting)."
+    },
+    {
+      "Tips": "Hair thinning or brittleness."
+    },
+    {
+      "Tips": "Sensation of a racing heart."
+    },
+    {
+      "Tips": "Facial drooping (possible stroke symptom)."
+    },
+    {
+      "Tips": "High-pitched ringing in the ears (tinnitus)."
+    },
+    {
+      "Tips": "Excessive salivation."
+    },
+    {
+      "Tips": "Recurrent infections (e.g., urinary tract infections)."
+    },
+    {
+      "Tips": "Persistent muscle stiffness."
+    },
+    {
+      "Tips": "Swollen or painful lymph nodes."
+    },
+    {
+      "Tips": "Persistent diarrhea or loose stools."
+    },
+    {
+      "Tips": "Hematuria (blood in urine)."
+    },
+    {
+      "Tips": "Swelling of the feet or ankles (peripheral edema)."
+    },
+    {
+      "Tips": "Difficulty maintaining an erection (erectile dysfunction)."
+    },
+    {
+      "Tips": "Increased gas or flatulence."
+    },
+    {
+      "Tips": "Sudden, severe headache (possible stroke symptom)."
+    },
+    {
+      "Tips": "Feeling disconnected or detached (depersonalization)."
+    },
+    {
+      "Tips": "Difficulty concentrating on tasks."
+    },
+    {
+      "Tips": "Chronic nausea or vomiting."
+    },
+    {
+      "Tips": "Loss of appetite and unintentional weight loss."
+    },
+    {
+      "Tips": "Mood swings and irritability."
+    },
+    {
+      "Tips": "Decreased sense of smell."
+    },
+    {
+      "Tips": "Dry eyes or blurred vision."
+    },
+    {
+      "Tips": "Feeling of impending doom."
+    },
+    {
+      "Tips": "Muscle stiffness or rigidity."
+    },
+    {
+      "Tips": "Frequent nosebleeds."
+    },
+    {
+      "Tips": "Pain or burning during urination."
+    },
+    {
+      "Tips": "Swollen or painful testicles (in men)."
+    },
+    {
+      "Tips": "Excessive earwax production."
+    },
+    {
+      "Tips": "Feeling overheated or flushed."
+    },
+    {
+      "Tips": "Changes in bowel habits."
+    },
+    {
+      "Tips": "Persistent hiccups."
+    },
+    {
+      "Tips": "Frequent eye twitching."
+    },
+    {
+      "Tips": "Hallucinations."
+    },
+    {
+      "Tips": "Sensation of weakness or \"jelly legs.\""
+    },
+    {
+      "Tips": "Tenderness or discomfort over the abdomen."
+    },
+    {
+      "Tips": "Difficulty staying asleep (insomnia)."
+    },
+    {
+      "Tips": "Slow, shallow breathing."
+    },
+    {
+      "Tips": "Loss of motivation."
+    },
+    {
+      "Tips": "Trembling or shaking hands."
+    },
+    {
+      "Tips": "Difficulty with fine motor skills."
+    },
+    {
+      "Tips": "Changes in menstrual patterns (in women)."
+    },
+    {
+      "Tips": "Sudden, unexplained bruising."
+    },
+    {
+      "Tips": "Sensation of falling (vertigo)."
+    },
+    {
+      "Tips": "Abnormal sensations in the mouth or tongue."
+    },
+    {
+      "Tips": "Frequent canker sores."
+    },
+    {
+      "Tips": "Altered sense of taste or smell."
+    },
+    {
+      "Tips": "Pain or discomfort in the upper back."
+    },
+    {
+      "Tips": "Cold or numb extremities."
+    },
+    {
+      "Tips": "Sudden, sharp chest pain (possible heart attack symptom)."
+    },
+    {
+      "Tips": "Increased sensitivity to sound (hyperacusis)."
+    },
+    {
+      "Tips": "Swelling or puffiness in the hands."
+    },
+    {
+      "Tips": "Difficulty making decisions."
+    },
+    {
+      "Tips": "Slow speech or difficulty finding words."
+    },
+    {
+      "Tips": "Frequent nightmares."
+    },
+    {
+      "Tips": "Restlessness during sleep."
+    },
+    {
+      "Tips": "Changes in voice pitch."
+    },
+    {
+      "Tips": "Frequent dental problems."
+    },
+    {
+      "Tips": "Slow reflexes."
+    },
+    {
+      "Tips": "Vision changes, such as halos around lights."
+    },
+    {
+      "Tips": "Unexplained weight gain or bloating."
+    },
+    {
+      "Tips": "Persistent coughing."
+    },
+    {
+      "Tips": "Eye redness or irritation."
+    },
+    {
+      "Tips": "Frequent throat clearing."
+    },
+    {
+      "Tips": "Sensation of pressure in the head."
+    },
+    {
+      "Tips": "Frequent hiccuping."
+    },
+    {
+      "Tips": "Persistent dry mouth or throat."
+    },
+    {
+      "Tips": "Abnormal body odor."
+    },
+    {
+      "Tips": "Increased sensitivity to touch or pain."
+    }
+  ]
+}
