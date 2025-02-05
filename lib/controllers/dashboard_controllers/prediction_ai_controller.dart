@@ -79,8 +79,7 @@ class PredictionAIController extends BaseController
 
       int xValue = 0;
 
-      for (int i = 0; i < readingList.length; i++)
-      {
+      for (int i = 0; i < readingList.length; i++) {
         String input = readingList[i].bloodPressure.toString();
         List values = input.split("/");
 
@@ -131,6 +130,30 @@ class PredictionAIController extends BaseController
       avgBodyHealth = totalBH.toInt();
 
       wellnessScore = avgBodyHealth.toString();
+
+      int wellness = int.parse(wellnessScore);
+
+      // >80 low, 50-80, medium, 30 to 50 high, less than 30 very high
+      if (wellness >= 80) {
+        concernLevel = 'Low';
+        color = colorForLow;
+        // dark green
+      } else if (wellness >= 50 && wellness < 80) {
+        concernLevel = 'Medium';
+        color = colorForMedium;
+        // light green
+      } else if (wellness >= 30 && wellness < 50) {
+        concernLevel = 'High';
+        color = colorForVeryLow;
+        // orange
+      } else if (wellness < 30) {
+        // red
+        concernLevel = 'Very high';
+        color = colorForVeryHigh;
+      }
+      // wellnessScore = wellness.toString();
+      printf('--------wellness--score------->$wellness');
+
       printf(
           '----total-body--health----->$totalBodyHealth---avg--->$avgBodyHealth');
 
@@ -378,29 +401,6 @@ class PredictionAIController extends BaseController
     final total = totalPoints / 4;
 
     printf('---total--point---->$total');
-
-    int wellness = total.toInt();
-
-    // >80 low, 50-80, medium, 30 to 50 high, less than 30 very high
-    if (wellness >= 80) {
-      concernLevel = 'Low';
-      color = colorForLow;
-      // dark green
-    } else if (wellness >= 50 && wellness < 80) {
-      concernLevel = 'Medium';
-      color = colorForMedium;
-      // light green
-    } else if (wellness >= 30 && wellness < 50) {
-      concernLevel = 'High';
-      color = colorForVeryLow;
-      // orange
-    } else if (wellness < 30) {
-      // red
-      concernLevel = 'Very high';
-      color = colorForVeryHigh;
-    }
-    // wellnessScore = wellness.toString();
-    printf('--------wellness--score------->$wellness');
 
     update();
 

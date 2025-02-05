@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:shimmer/shimmer.dart';
+import 'dart:io';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -1797,7 +1798,6 @@ Widget widgetTopHeader(DashboardController controller) {
           SizedBox(
             height: 112.h,
           ),
-
           SizedBox(
             height: 60.h,
             width: Get.width,
@@ -1859,9 +1859,7 @@ Widget widgetTopHeader(DashboardController controller) {
             ),
           ),
           SizedBox(height: 20.h),
-          controller.isWellnessScore
-              ? widgetAIScore(controller)
-              : Container(),
+          controller.isWellnessScore ? widgetAIScore(controller) : Container(),
         ],
       ),
     ),

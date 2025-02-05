@@ -36,7 +36,7 @@ dependencies:
   d_chart: ^2.2.4
 
   firebase_auth: ^4.2.6
-  firebase_core: ^2.5.0
+  firebase_core: ^2.24.2
   firebase_database: ^10.0.11
   firebase_crashlytics:
   fluttertoast: ^8.1.3
@@ -74,6 +74,8 @@ dependencies:
   screenshot: ^1.3.0
   open_filex:
   shimmer:
+  firebase_storage: ^11.6.0
+  provider: ^6.1.2
 
 
 
