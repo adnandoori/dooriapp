@@ -170,92 +170,185 @@ class PredictionAIController extends BaseController
 
   void functionForWellnessContent() {
     printf('-------call---functionForWellnessContent----');
-    if ((highestHR - avgHR) > 15 && (highestSystolic - avgSystolic) > 8) {
-      title = 'BP instability detected';
-      content =
-          'You might feel unsteady with sudden changes in energy. Could be due to stress, irregular exercise, or inconsistent medication.';
-    } else {
-      // Cardiac Decline
-      if (avgHR < 60 && avgHRV < 40 && avgSystolic > 126) {
-        title = "Heart health under strain";
-        content =
-            "You might feel fatigued and out of breath. Could be due to aging, heart conditions, or lack of exercise.";
+    printf(
+        'adnan---avgHR--->$avgHR---avgHRV--->$avgHRV---avgSystolic--->$avgSystolic---avgDys--->$avgDia');
+
+    Map<String, String> evaluateAllCombos({
+      required double avgHR,
+      required double avgHRV,
+      required double avgSystolic,
+    }) {
+      print('avgHR: $avgHR'); // Add this line to print the value of avgHR
+      print('avgHRV: $avgHRV'); // Add this line to print the value of avgHRV
+      print(
+          'avgSystolic: $avgSystolic'); // Add this line to print the value of avgSystolic
+
+      String title = '';
+      String content = '';
+
+      String _classifyHR(double hr) {
+        if (avgHR < 60) {
+          return 'Low';
+        } else if (hr <= 80) {
+          return 'Normal';
+        } else {
+          return 'High';
+        }
       }
-      // Hypertensive Stress
-      else if (avgHR > 80 &&
-          avgHRV < 40 &&
-          avgSystolic >= 124 &&
-          avgSystolic <= 126) {
-        title = "High stress level detected";
-        content =
-            "You might be feeling overwhelmed and anxious. Could be due to work pressure, personal issues, or lack of sleep.";
-      } else if (avgHR > 80 &&
-          avgHRV > 50 &&
-          avgSystolic >= 124 &&
-          avgSystolic <= 126) {
-        title = "Good recovery, but high BP";
-        content =
-            "You might feel tense but able to recover quickly. Could be due to a stressful lifestyle, diet, or inconsistent rest.";
+
+      String _classifyHRV(double hrv) {
+        if (avgHRV < 60) {
+          return 'Low';
+        } else if (hrv <= 80) {
+          return 'Normal';
+        } else {
+          return 'High';
+        }
       }
-      // Chronic Fatigue
-      else if (avgHR >= 60 &&
-          avgHR <= 80 &&
-          avgHRV < 40 &&
-          avgSystolic >= 124 &&
-          avgSystolic <= 126) {
-        title = "Low recovery and constant stress";
-        content =
-            "You might feel exhausted and mentally drained. Could be due to long working hours, insufficient sleep, or emotional stress.";
+
+      String _classifyBP(double systolic) {
+        if (systolic < 118) {
+          return 'Low';
+        } else if (systolic <= 122) {
+          return 'Normal';
+        } else {
+          return 'High';
+        }
       }
-      // Overexertion Syndrome
-      else if (avgHR > 80 &&
-          avgHRV >= 40 &&
-          avgHRV <= 50 &&
-          avgSystolic >= 122 &&
-          avgSystolic <= 124) {
-        title = "Overworking heart detected";
+
+      final String hrCat = _classifyHR(avgHR);
+      final String hrvCat = _classifyHRV(avgHRV);
+      final String bpCat = _classifyBP(avgSystolic);
+
+      print('hrcat---->$hrCat---hrvcat---->$hrvCat---bpcat---->$bpCat');
+
+      if (hrCat == 'Low' && hrvCat == 'Low' && bpCat == 'Low') {
+        title = "Low HR, Low HRV, Low BP";
         content =
-            "You might feel physically overworked or tense. Could be due to intense exercise, stress, or lack of rest.";
-      }
-      // Pre-Hypertensive Alert
-      else if (avgHR >= 60 &&
-          avgHR <= 80 &&
-          avgHRV >= 50 &&
-          avgHRV <= 60 &&
-          avgSystolic >= 122 &&
-          avgSystolic <= 124) {
-        title = "Elevated BP detected";
+            "You might be feeling tired or lightheaded, could be due to underlying issues or insufficient hydration.";
+      } else if (hrCat == 'Low' && hrvCat == 'Low' && bpCat == 'Normal') {
+        title = "Low HR, Low HRV, Normal BP";
         content =
-            "You might feel fine but occasionally tense. Could be due to diet, stress, or early signs of hypertension.";
-      }
-      // Optimal Cardiac Health
-      else if (avgHR >= 60 &&
-          avgHR <= 80 &&
-          avgHRV > 60 &&
-          avgSystolic >= 118 &&
-          avgSystolic <= 122) {
-        title = "Heart is functioning well";
+            "You might be feeling fatigued or sluggish, could be due to overtraining or chronic stress.";
+      } else if (hrCat == 'Low' && hrvCat == 'Low' && bpCat == 'High') {
+        title = "Low HR, Low HRV, High BP";
         content =
-            "You’re likely feeling energized and balanced. Could be due to healthy lifestyle, regular exercise, and stress management.";
-      }
-      // Underactive Heart
-      else if (avgHR < 60 &&
-          avgHRV < 40 &&
-          avgSystolic >= 118 &&
-          avgSystolic <= 122) {
-        title = "Low heart activity detected";
+            "You might be feeling somewhat off or weak, could be due to medications or cardiovascular concerns.";
+      } else if (hrCat == 'Low' && hrvCat == 'Normal' && bpCat == 'Low') {
+        title = "Low HR, Normal HRV, Low BP";
         content =
-            "You might feel sluggish and light-headed. Could be due to low physical activity, medication, or underlying heart issues.";
-      }
-      // Hypotensive Risk
-      else if (avgHR < 60 && avgHRV > 60 && avgSystolic < 118) {
-        title = "Low BP detected";
+            "You might be feeling dizzy if you stand quickly, could be due to athletic adaptation or mild hypotension.";
+      } else if (hrCat == 'Low' && hrvCat == 'Normal' && bpCat == 'Normal') {
+        title = "Low HR, Normal HRV, Normal BP";
         content =
-            "You might feel dizzy or weak. Could be due to dehydration, poor diet, or underlying medical conditions.";
+            "You might be feeling generally normal, could be due to good fitness if no other symptoms.";
+      } else if (hrCat == 'Low' && hrvCat == 'Normal' && bpCat == 'High') {
+        title = "Low HR, Normal HRV, High BP";
+        content =
+            "You might be feeling no major symptoms, could be due to medication or unique physiology.";
+      } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'Low') {
+        title = "Low HR, High HRV, Low BP";
+        content =
+            "You might be feeling occasional dizziness, could be due to excellent fitness or certain meds.";
+      } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'Normal') {
+        title = "Low HR, High HRV, Normal BP";
+        content =
+            "You might be feeling calm and well, could be due to strong cardiovascular fitness.";
+      } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'High') {
+        title = "Low HR, High HRV, High BP";
+        content =
+            "You might be feeling fairly normal, could be due to medication or mixed cardiovascular factors.";
+      } else if (hrCat == 'Normal' && hrvCat == 'Low' && bpCat == 'Low') {
+        title = "Normal HR, Low HRV, Low BP";
+        content =
+            "You might be feeling lightheaded or fatigued, could be due to stress, dehydration, or poor recovery.";
+      } else if (hrCat == 'Normal' && hrvCat == 'Low' && bpCat == 'Normal') {
+        title = "Normal HR, Low HRV, Normal BP";
+        content =
+            "You might be feeling tense or tired, could be due to stress or insufficient rest.";
+      } else if (hrCat == 'Normal' && hrvCat == 'Low' && bpCat == 'High') {
+        title = "Normal HR, Low HRV, High BP";
+        content =
+            "You might be feeling on edge or stressed, could be due to chronic stress or lifestyle factors.";
+      } else if (hrCat == 'Normal' && hrvCat == 'Normal' && bpCat == 'Low') {
+        title = "Normal HR, Normal HRV, Low BP";
+        content =
+            "You might be feeling mostly okay with occasional dizziness, could be due to normal variation.";
+      } else if (hrCat == 'Normal' && hrvCat == 'Normal' && bpCat == 'Normal') {
+        title = "Normal HR, Normal HRV, Normal BP";
+        content =
+            "You might be feeling healthy and balanced, could be due to a good overall lifestyle.";
+      } else if (hrCat == 'Normal' && hrvCat == 'Normal' && bpCat == 'High') {
+        title = "Normal HR, Normal HRV, High BP";
+        content =
+            "You might be feeling fine, could be due to mild hypertension or stress.";
+      } else if (hrCat == 'Normal' && hrvCat == 'High' && bpCat == 'Low') {
+        title = "Normal HR, High HRV, Low BP";
+        content =
+            "You might be feeling generally good with possible mild dizziness, could be due to strong fitness.";
+      } else if (hrCat == 'Normal' && hrvCat == 'High' && bpCat == 'Normal') {
+        title = "Normal HR, High HRV, Normal BP";
+        content =
+            "You might be feeling relaxed and healthy, could be due to good cardiovascular adaptability.";
+      } else if (hrCat == 'Normal' && hrvCat == 'High' && bpCat == 'High') {
+        title = "Normal HR, High HRV, High BP";
+        content =
+            "You might be feeling normal, could be due to acute stress or ‘white-coat’ effect.";
+      } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'Low') {
+        title = "High HR, Low HRV, Low BP";
+        content =
+            "You might be feeling shaky or weak, could be due to dehydration or shock-like state.";
+      } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'Normal') {
+        title = "High HR, Low HRV, Normal BP";
+        content =
+            "You might be feeling anxious or overworked, could be due to overexertion or poor recovery.";
+      } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'High') {
+        title = "High HR, Low HRV, High BP";
+        content =
+            "You might be feeling tense or stressed, could be due to significant cardiovascular strain.";
+      } else if (hrCat == 'High' && hrvCat == 'Normal' && bpCat == 'Low') {
+        title = "High HR, Normal HRV, Low BP";
+        content =
+            "You might be feeling faint or dizzy, could be due to volume depletion or acute stress.";
+      } else if (hrCat == 'High' && hrvCat == 'Normal' && bpCat == 'Normal') {
+        title = "High HR, Normal HRV, Normal BP";
+        content =
+            "You might be feeling anxious or overheated, could be due to recent activity or stimulants.";
+      } else if (hrCat == 'High' && hrvCat == 'Normal' && bpCat == 'High') {
+        title = "High HR, Normal HRV, High BP";
+        content =
+            "You might be feeling tense, could be due to acute stress, hypertension, or anxiety.";
+      } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'Low') {
+        title = "High HR, High HRV, Low BP";
+        content =
+            "You might be feeling a rush or jittery, could be due to sudden stress or shock response.";
+      } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'Normal') {
+        title = "High HR, High HRV, Normal BP";
+        content =
+            "You might be feeling energized or restless, could be due to exercise or emotional excitement.";
+      } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'High') {
+        title = "High HR, High HRV, High BP";
+        content =
+            "You might be feeling stressed or overexcited, could be due to acute exertion or strong emotional state.";
       } else {
-        title = "No significant health concerns detected.";
+        title = "Unknown";
+        content = "Unable to determine wellness title.";
       }
+      return {
+        "title": title,
+        "content": content,
+      };
     }
+
+    final result = evaluateAllCombos(
+      avgHR: avgHR.toDouble(),
+      avgHRV: avgHRV.toDouble(),
+      avgSystolic: avgSystolic.toDouble(),
+    );
+
+    print("content:${result["content"]}");
+    String wellnesscontent = result["content"] ?? "";
+    content = wellnesscontent;
     update();
   }
 
