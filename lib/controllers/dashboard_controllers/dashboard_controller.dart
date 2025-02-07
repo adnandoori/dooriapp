@@ -141,6 +141,8 @@ class DashboardController extends BaseController
   var cardiacOutput = '0';
   var pulsePressure = '0';
   var pulseMessage = 'not_measured'.tr;
+  var bfiStatement = '';
+  var hriStatement = '';
   var sv = '0';
   var arterialPressure = '0';
   var arterialMessage = 'not_measured'.tr;
@@ -498,6 +500,10 @@ class DashboardController extends BaseController
             bp: bloodPressure,
             hr: double.parse(heartRate.toString()),
             hrv: double.parse(hrVariability.toString()));
+        calculateBFI(bp: bloodPressure);
+        calculateHRI(
+            hr: double.parse(heartRate.toString()),
+            hrv: double.parse(hrVariability.toString()));
 
         try {
           heartStrain = calculateHeartStrain(
@@ -505,6 +511,7 @@ class DashboardController extends BaseController
                   bloodPressure: bloodPressure,
                   hr: double.parse(heartRate.toString()))
               .toInt();
+
           printf('--------final-------strain------>$heartStrain');
         } catch (e) {
           printf('---exe---heart-strain--->$e');
@@ -2234,7 +2241,101 @@ class DashboardController extends BaseController
     }
   }
 
-  //
+  void calculateBFI({required String bp}) {
+    String sys = bp.substring(0, bp.indexOf('/'));
+    String dys = bp.substring(bp.indexOf('/') + '/'.length, bp.length);
+
+    double systolicBP = double.parse(sys); // Systolic blood pressure
+    double diastolicBP = double.parse(dys); // Diastolic blood pressure
+    if (systolicBP <= diastolicBP) return; // Ensure valid BP values
+
+    double pulsePressure = systolicBP - diastolicBP;
+    double meanArterialPressure = diastolicBP + (pulsePressure / 3);
+    double bpMean = (systolicBP + (2 * diastolicBP)) / 3;
+
+    // Optimal and physiological ranges
+    double ppOptimal = 40, ppRange = 20;
+    double mapOptimal = 93, mapRange = 20;
+    double bpMeanOptimal = 93, bpRange = 20;
+
+    // Weighting factors
+    double w1 = 4, w2 = 3, w3 = 3;
+
+    // Compute individual deviations
+    double ppDeviation = (pulsePressure - ppOptimal).abs() / ppRange;
+    double mapDeviation = (meanArterialPressure - mapOptimal).abs() / mapRange;
+    double bpMeanDeviation = (bpMean - bpMeanOptimal).abs() / bpRange;
+
+    // Compute Blood Flow Index (BFI) out of 10
+    double bfi =
+        10 - (w1 * ppDeviation + w2 * mapDeviation + w3 * bpMeanDeviation);
+    printf('bfi----->$bfi');
+
+    //statements logic
+
+    if (bfi >= 9) {
+      bfiStatement +=
+          "A high level indicates excellent blood flow, ensuring efficient oxygen delivery, minimal vascular resistance, and a well-functioning cardiovascular system.";
+    } else if (bfi >= 7) {
+      bfiStatement =
+          "A good level suggests healthy circulation with only minor variations, maintaining stable oxygen supply and heart performance with minimal effort.";
+    } else if (bfi >= 5) {
+      bfiStatement =
+          "A moderate level indicates some inefficiencies in circulation, possibly due to mild vascular resistance, stress, or temporary fluctuations in blood pressure.";
+    } else if (bfi >= 3) {
+      bfiStatement =
+          "A lower level suggests reduced blood flow efficiency, potential vascular stiffness, and a higher workload on the heart, which may require lifestyle adjustments.";
+    }
+
+    printf('bfiStatement----->$bfiStatement');
+  }
+
+// calcultae hri
+
+  double calculateHRI({required double hr, required double hrv}) {
+    if (hr <= 0 || hrv < 0) return 0.0;
+
+    double rrInterval = 60000 / hr;
+    // Optimal and physiological ranges
+    double hrOptimal = 60, hrRange = 30;
+    double rrOptimal = 1000, rrRange = 400;
+    double hrvOptimal = 120, hrvRange = 70;
+
+    // Weighting factors
+    double w1 = 4, w2 = 3, w3 = 3;
+
+    // Compute individual deviations
+    double hrDeviation = (hr - hrOptimal).abs() / hrRange;
+    double rrDeviation = (rrInterval - rrOptimal).abs() / rrRange;
+    double hrvDeviation = (hrv - hrvOptimal).abs() / hrvRange;
+
+    // Compute Heart Rhythm Index (HRI) out of 10
+    double hri = 10 - (w1 * hrDeviation + w2 * rrDeviation + w3 * hrvDeviation);
+    printf("hri----->$hri");
+
+    if (hri >= 9) {
+      hriStatement =
+          "A high level indicates excellent heart adaptability, stable nervous system regulation, and minimal irregularities in heartbeat patterns.";
+    } else if (hri >= 7) {
+      hriStatement =
+          "A good level suggests a well-maintained rhythm with only minor variations, indicating strong cardiovascular efficiency and stress adaptability.";
+    } else if (hri >= 5) {
+      hriStatement =
+          "A moderate level suggests some fluctuations, possibly linked to stress, fatigue, or early signs of autonomic imbalances that should be monitored over time.";
+    } else if (hri >= 3) {
+      hriStatement =
+          "A lower level suggests increased irregularities in heart rhythm, potential autonomic dysfunction, or a higher cardiac workload that may require lifestyle adjustments.";
+    } else {
+      hriStatement =
+          "A very low level indicates significant heart rhythm instability, autonomic stress, or irregular beats that may require medical attention and further evaluation.";
+    }
+
+    printf('hriStatement----->$hriStatement');
+    // Ensure HRI stays within 0-10 range
+    return hri.clamp(0.0, 10.0);
+  }
+
+// calculate pulsePressure
   void getPulsePressure({required String bp}) {
     printf(
         '---------------------------getPulsePressure----------------------$bp');
@@ -5565,6 +5666,12 @@ class DashboardController extends BaseController
                     bp: bloodPressure,
                     hr: double.parse(heartRate.toString()),
                     hrv: double.parse(hrVariability.toString()));
+
+                calculateBFI(bp: bloodPressure);
+                calculateHRI(
+                    hr: double.parse(heartRate.toString()),
+                    hrv: double.parse(hrVariability.toString()));
+
                 try {
                   newHealthTips = lastRecord.healthTips.toString();
                 } catch (e) {
