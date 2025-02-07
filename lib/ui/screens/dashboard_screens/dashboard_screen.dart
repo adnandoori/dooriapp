@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:doori_mobileapp/services/whatsapp/whatsapp_service.dart';
+
 import 'dart:io';
 
 class DashboardScreen extends StatelessWidget {
@@ -2342,6 +2344,26 @@ Widget widgetMyVitals(DashboardController controller) {
   );
 }
 
+class WhatsappButton extends StatelessWidget {
+  final AisensyService aisensyService = AisensyService();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            // Send a message to a specific phone number
+            await aisensyService.sendWhatsAppMessage(
+                '1234567890', 'Hello from my Flutter app!');
+          },
+          child: Text('Send WhatsApp Message'),
+        ),
+      ),
+    );
+  }
+}
+
 Widget widgetInsights(DashboardController controller) {
   return Column(
     mainAxisSize: MainAxisSize.min,
@@ -2733,8 +2755,7 @@ Widget widgetStrokeAndCardiac(DashboardController controller) {
                           height: 5.h,
                         ),
                         widgetGaugeForStoke(
-                          double.parse(controller.pulsePressure)
-                              .roundToDouble(),
+                          double.parse(controller.strokeVolume).roundToDouble(),
                           controller.strokeMsg,
                         ),
                         SizedBox(
@@ -2758,7 +2779,7 @@ Widget widgetStrokeAndCardiac(DashboardController controller) {
                           height: 5.h,
                         ),
                         widgetGaugeForCardiac(
-                          double.parse(controller.arterialPressure)
+                          double.parse(controller.cardiacOutput)
                               .roundToDouble(),
                           controller.cardiacMsg,
                         ),
@@ -2816,19 +2837,19 @@ Widget widgetGaugeForStoke(double value, String msg) {
     const GaugeSegment(
       color: Color(0xFFf8555a),
       from: 0,
-      to: 30.0,
+      to: 35,
       cornerRadius: Radius.zero,
     ),
     const GaugeSegment(
       color: Color(0xFF4fd286),
-      from: 30,
-      to: 50.0,
+      from: 35,
+      to: 65,
       cornerRadius: Radius.zero,
     ),
     const GaugeSegment(
       color: Color(0xFFf8555a),
-      from: 50.0,
-      to: 80.0,
+      from: 65,
+      to: 100,
       cornerRadius: Radius.zero,
     ),
   ];
@@ -2851,7 +2872,7 @@ Widget widgetGaugeForStoke(double value, String msg) {
               value: value,
               axis: GaugeAxis(
                 min: 0,
-                max: 80,
+                max: 100,
                 degrees: 260,
                 pointer: const GaugePointer.needle(
                   width: 20,
@@ -2909,19 +2930,19 @@ Widget widgetGaugeForCardiac(double value, String msg) {
     const GaugeSegment(
       color: Color(0xFFf8555a),
       from: 0,
-      to: 70.0,
+      to: 5.5,
       cornerRadius: Radius.zero,
     ),
     const GaugeSegment(
       color: Color(0xFF4fd286),
-      from: 70,
-      to: 100.0,
+      from: 5.5,
+      to: 7.5,
       cornerRadius: Radius.zero,
     ),
     const GaugeSegment(
       color: Color(0xFFf8555a),
-      from: 100.0,
-      to: 170.0,
+      from: 7.5,
+      to: 13,
       cornerRadius: Radius.zero,
     ),
   ];
@@ -2944,7 +2965,7 @@ Widget widgetGaugeForCardiac(double value, String msg) {
             value: value,
             axis: GaugeAxis(
               min: 0,
-              max: 170,
+              max: 13,
               degrees: 260,
               pointer: const GaugePointer.needle(
                 width: 20,
@@ -3686,7 +3707,7 @@ Widget widgetBodyMassIndex(DashboardController controller) {
                                           controller.bmiValue.toString())
                                       : Container()),
                               Expanded(
-                                  child: controller.isNormalThinness
+                                  child: controller.isnormalThinness
                                       ? widgetBMIPointer(
                                           controller.bmiValue.toString())
                                       : Container()),

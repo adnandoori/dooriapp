@@ -89,7 +89,7 @@ class DashboardController extends BaseController
       hrvState = 'not_measured'.tr, //'unhealthy'.tr,
       bodyState = 'not_measured'.tr; //'unhealthy'.tr;
 
-  var hrTag = 'good'.tr;
+  var hrTag = 'normal'.tr;
 
   var lastHeartRateValue = '';
 
@@ -100,7 +100,7 @@ class DashboardController extends BaseController
   var isNonVegetarian = 'No';
   int age = 18;
 
-  var healthTips = 'Your health is in good shape';
+  var healthTips = 'Your health is in normal shape';
   var tempTips = 'High-protein foods, nuts, and meat can cause body heat.';
   var heartHealthValue = '';
 
@@ -137,9 +137,11 @@ class DashboardController extends BaseController
 
   var avg7days = '0';
 
+  var strokeVolume = '0';
+  var cardiacOutput = '0';
   var pulsePressure = '0';
   var pulseMessage = 'not_measured'.tr;
-
+  var sv = '0';
   var arterialPressure = '0';
   var arterialMessage = 'not_measured'.tr;
 
@@ -148,8 +150,8 @@ class DashboardController extends BaseController
   var systolic = '';
   var diastolic = '';
 
-  var strokeMsg = AppConstants.low;
-  var cardiacMsg = AppConstants.low;
+  var strokeMsg = 'not_measured'.tr;
+  var cardiacMsg = 'not_measured'.tr;
 
   var tag = "DooriDashboard";
   var myLogFileName = "DooriLogFileDashboard";
@@ -179,7 +181,7 @@ class DashboardController extends BaseController
   bool isSevereThinness = false,
       isModerateThinness = false,
       isMildThinness = false,
-      isNormalThinness = false,
+      isnormalThinness = false,
       isOverWeightThinness = false,
       isObeseClass = false,
       isObeseClass2 = false,
@@ -492,11 +494,16 @@ class DashboardController extends BaseController
         bodyHealth = measureUserList.last.bodyHealth.toString();
 
         getPulsePressure(bp: bloodPressure);
+        calculateStrokeVolume(
+            bp: bloodPressure,
+            hr: double.parse(heartRate.toString()),
+            hrv: double.parse(hrVariability.toString()));
 
         try {
           heartStrain = calculateHeartStrain(
                   hrv: double.parse(hrVariability.toString()),
-                  bloodPressure: bloodPressure)
+                  bloodPressure: bloodPressure,
+                  hr: double.parse(heartRate.toString()))
               .toInt();
           printf('--------final-------strain------>$heartStrain');
         } catch (e) {
@@ -1120,7 +1127,7 @@ class DashboardController extends BaseController
     stressLevel = sl.toInt();
 
     if (hearthealth >= 90) {
-      healthTips = 'your_heart_is_in_good_shape'.tr;
+      healthTips = 'your_heart_is_in_normal_shape'.tr;
     }
 
     // // TODO here 2 fab,2024
@@ -1176,182 +1183,182 @@ class DashboardController extends BaseController
         printf('age---$age');
 
         if (hr <= 55) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 56 && hr <= 61) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 62 && hr <= 65) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 66 && hr <= 69) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 81) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 82) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
         printf('check---all-condition');
       }
       //
       if (age >= 26 && age <= 35) {
         if (hr <= 54) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 55 && hr <= 61) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 62 && hr <= 66) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 66 && hr <= 70) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 71 && hr <= 74) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 75 && hr <= 81) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 82) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 36 && age <= 45) {
         if (hr <= 60) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 57 && hr <= 62) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 63 && hr <= 66) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 67 && hr <= 70) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 71 && hr <= 75) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 76 && hr <= 82) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 83) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 46 && age <= 55) {
         if (hr <= 73) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 58 && hr <= 63) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 64 && hr <= 67) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 68 && hr <= 71) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 72 && hr <= 76) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
         if (hr >= 77 && hr <= 83) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 84) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 56 && age <= 65) {
         if (hr <= 56) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 57 && hr <= 61) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 62 && hr <= 67) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 68 && hr <= 71) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 72 && hr <= 75) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 76 && hr <= 81) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 82) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
         //
         if (age > 65) {
           if (hr <= 55) {
-            hrState = 'Athlete';
+            hrState = 'normal';
           }
 
           if (hr >= 56 && hr <= 61) {
-            hrState = 'Excellent';
+            hrState = 'normal';
           }
 
           if (hr >= 62 && hr <= 65) {
-            hrState = 'great'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 66 && hr <= 69) {
             //hrState = 'Healthy';
-            hrState = 'above_average'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 70 && hr <= 73) {
-            hrState = 'average'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 74 && hr <= 79) {
-            hrState = 'below_average'.tr;
+            hrState = 'high'.tr;
           }
 
           if (hr > 80) {
-            hrState = 'below_average'.tr;
+            hrState = 'high'.tr;
           }
         }
       }
@@ -1362,186 +1369,186 @@ class DashboardController extends BaseController
 
       if (age >= 18 && age <= 25) {
         if (hr <= 65) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 61 && hr <= 65) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 66 && hr <= 69) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 78) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 79 && hr <= 84) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr > 85) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 26 && age <= 35) {
         if (hr <= 66) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 60 && hr <= 64) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 65 && hr <= 68) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 69 && hr <= 72) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 73 && hr <= 76) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 77 && hr <= 82) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr > 83) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 36 && age <= 45) {
         if (hr <= 66) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 60 && hr <= 64) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 65 && hr <= 69) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 78) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 79 && hr <= 84) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr > 85) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 46 && age <= 55) {
         if (hr <= 67) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 61 && hr <= 65) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 66 && hr <= 69) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 77) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 78 && hr <= 83) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 84) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
       }
       //
       if (age >= 56 && age <= 65) {
         if (hr <= 67) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 60 && hr <= 64) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 65 && hr <= 68) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 69 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 77) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 78 && hr <= 83) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 84) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
         //
         if (age > 65) {
           if (hr <= 65) {
-            hrState = 'Athlete';
+            hrState = 'normal';
           }
 
           if (hr >= 60 && hr <= 64) {
-            hrState = 'Excellent';
+            hrState = 'normal';
           }
 
           if (hr >= 65 && hr <= 68) {
-            hrState = 'great'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 69 && hr <= 72) {
             //hrState = 'Healthy';
-            hrState = 'above_average'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 73 && hr <= 76) {
-            hrState = 'average'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 77 && hr <= 84) {
-            hrState = 'below_average'.tr;
+            hrState = 'high'.tr;
           }
 
           if (hr > 85) {
-            hrState = 'below_average'.tr;
+            hrState = 'high'.tr;
           }
         }
       }
@@ -1551,82 +1558,78 @@ class DashboardController extends BaseController
 
     if (oxygenLevel > 97) {
       //oxygenState = 'Very healthy';
-      oxygenState = 'good'.tr;
+      oxygenState = 'normal'.tr;
     }
 
     if (oxygenLevel >= 96 && oxygenLevel <= 97) {
       //oxygenState = 'Healthy';
-      oxygenState = 'above_average'.tr;
+      oxygenState = 'normal'.tr;
     }
 
     if (oxygenLevel >= 95 && oxygenLevel <= 96) {
-      oxygenState = 'average'.tr;
+      oxygenState = 'low'.tr;
     }
 
     if (oxygenLevel >= 94 && oxygenLevel <= 95) {
-      oxygenState = 'below_average'.tr;
+      oxygenState = 'low'.tr;
     }
 
     if (oxygenLevel < 94) {
-      oxygenState = 'bad'.tr;
+      oxygenState = 'low'.tr;
     }
 
     // Blood pressure
 
     if (bloodPressure >= 118 && bloodPressure <= 122) {
-      bpState = 'good'.tr;
+      bpState = 'normal'.tr;
     }
 
     if (bloodPressure >= 116 && bloodPressure <= 118) {
-      bpState = 'above_average'.tr;
+      bpState = 'low'.tr;
     }
 
     if (bloodPressure >= 122 && bloodPressure <= 124) {
-      bpState = 'above_average'.tr;
+      bpState = 'normal'.tr;
     }
 
     if (bloodPressure >= 114 && bloodPressure <= 116) {
-      bpState = 'average'.tr;
+      bpState = 'low'.tr;
     }
 
     if (bloodPressure >= 124 && bloodPressure <= 126) {
-      bpState = 'average'.tr;
+      bpState = 'high'.tr;
     }
 
     if (bloodPressure >= 112 && bloodPressure <= 114) {
-      bpState = 'below_average'.tr;
+      bpState = 'low'.tr;
     }
 
     if (bloodPressure >= 126 && bloodPressure <= 128) {
-      bpState = 'below_average'.tr;
+      bpState = 'high'.tr;
     }
 
     if (bloodPressure > 128) {
-      bpState = 'bad'.tr;
+      bpState = 'high'.tr;
     }
 
     if (bloodPressure < 112) {
-      bpState = 'bad'.tr;
+      bpState = 'low'.tr;
     }
 
     // HRVariability
 
-    if (hrv < 50) {
-      hrvState = 'below_average'.tr;
-    } else if (hrv >= 50 && hrv < 100) {
-      hrvState = 'average'.tr;
-    } else if (hrv >= 100) {
-      hrvState = 'above_average'.tr;
+    if (hrv < 80) {
+      hrvState = 'low'.tr;
+    } else if (hrv >= 80) {
+      hrvState = 'normal'.tr;
     }
 
     //
-
-    if (hrState == 'Excellent' ||
-        hrState == 'very_healthy'.tr ||
-        hrState == 'Athlete') {
+// task 1 starts
+    if (hrState == 'normal') {
       hrPoints = 100;
       hrTag = 'very_healthy'.tr;
-    } else if (hrState == 'great'.tr || hrState == 'above_average'.tr) {
+    } else if (hrState == 'normal'.tr) {
       hrPoints = 80;
       hrTag = 'healthy'.tr;
     } else if (hrState == 'average'.tr) {
@@ -1635,10 +1638,12 @@ class DashboardController extends BaseController
     } else if (hrState == 'below_average'.tr || hrState == 'below_average'.tr) {
       hrPoints = 40;
       hrTag = 'unhealthy'.tr;
-    } else if (hrState == 'above_average'.tr) {
+    } else if (hrState == 'normal'.tr) {
       hrPoints = 20;
       hrTag = 'very_unhealthy'.tr;
     }
+
+    // task1 ends
 
     //printf('-------checkHeartRate-$hrState $hrPoints');
 
@@ -1702,27 +1707,27 @@ class DashboardController extends BaseController
         printf('age---$age');
 
         if (hr <= 55) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 56 && hr <= 61) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 62 && hr <= 65) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 66 && hr <= 69) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
-          hrState = 'average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 81) {
-          hrState = 'below_average'.tr;
+          hrState = 'high'.tr;
         }
 
         if (hr >= 82) {
@@ -1733,19 +1738,19 @@ class DashboardController extends BaseController
       //
       if (age >= 26 && age <= 35) {
         if (hr <= 54) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 55 && hr <= 61) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 62 && hr <= 66) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 66 && hr <= 70) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 71 && hr <= 74) {
@@ -1763,19 +1768,19 @@ class DashboardController extends BaseController
       //
       if (age >= 36 && age <= 45) {
         if (hr <= 57) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 57 && hr <= 62) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 63 && hr <= 66) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 67 && hr <= 70) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 71 && hr <= 75) {
@@ -1793,19 +1798,19 @@ class DashboardController extends BaseController
       //
       if (age >= 46 && age <= 55) {
         if (hr <= 58) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 58 && hr <= 63) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 64 && hr <= 67) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 68 && hr <= 71) {
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 72 && hr <= 76) {
@@ -1822,20 +1827,20 @@ class DashboardController extends BaseController
       //
       if (age >= 56) {
         if (hr <= 56) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 57 && hr <= 61) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 62 && hr <= 67) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 68 && hr <= 71) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 72 && hr <= 75) {
@@ -1852,20 +1857,20 @@ class DashboardController extends BaseController
         //
         if (age > 65) {
           if (hr >= 50 && hr <= 55) {
-            hrState = 'Athlete';
+            hrState = 'normal';
           }
 
           if (hr >= 56 && hr <= 61) {
-            hrState = 'Excellent';
+            hrState = 'normal';
           }
 
           if (hr >= 62 && hr <= 65) {
-            hrState = 'great'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 66 && hr <= 69) {
             //hrState = 'Healthy';
-            hrState = 'above_average'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 70 && hr <= 73) {
@@ -1888,20 +1893,20 @@ class DashboardController extends BaseController
 
       if (age >= 18 && age <= 25) {
         if (hr <= 60) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 61 && hr <= 65) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 66 && hr <= 69) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 78) {
@@ -1919,20 +1924,20 @@ class DashboardController extends BaseController
       //
       if (age >= 26 && age <= 35) {
         if (hr <= 59) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 60 && hr <= 64) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 65 && hr <= 68) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 69 && hr <= 72) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 73 && hr <= 76) {
@@ -1950,20 +1955,20 @@ class DashboardController extends BaseController
       //
       if (age >= 36 && age <= 45) {
         if (hr <= 59) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 60 && hr <= 64) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 65 && hr <= 69) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 78) {
@@ -1981,20 +1986,20 @@ class DashboardController extends BaseController
       //
       if (age >= 46 && age <= 55) {
         if (hr <= 60) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 61 && hr <= 65) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 66 && hr <= 69) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 70 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 77) {
@@ -2012,20 +2017,20 @@ class DashboardController extends BaseController
       //
       if (age >= 56) {
         if (hr <= 59) {
-          hrState = 'Athlete';
+          hrState = 'normal';
         }
 
         if (hr >= 60 && hr <= 64) {
-          hrState = 'Excellent';
+          hrState = 'normal';
         }
 
         if (hr >= 65 && hr <= 68) {
-          hrState = 'great'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 69 && hr <= 73) {
           //hrState = 'Healthy';
-          hrState = 'above_average'.tr;
+          hrState = 'normal'.tr;
         }
 
         if (hr >= 74 && hr <= 77) {
@@ -2042,20 +2047,20 @@ class DashboardController extends BaseController
         //
         if (age > 65) {
           if (hr >= 62 && hr <= 65) {
-            hrState = 'Athlete';
+            hrState = 'normal';
           }
 
           if (hr >= 60 && hr <= 64) {
-            hrState = 'Excellent';
+            hrState = 'normal';
           }
 
           if (hr >= 65 && hr <= 68) {
-            hrState = 'great'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 69 && hr <= 72) {
             //hrState = 'Healthy';
-            hrState = 'above_average'.tr;
+            hrState = 'normal'.tr;
           }
 
           if (hr >= 73 && hr <= 76) {
@@ -2077,12 +2082,12 @@ class DashboardController extends BaseController
 
     if (oxygenLevel > 97) {
       //oxygenState = 'Very healthy';
-      oxygenState = 'good'.tr;
+      oxygenState = 'normal'.tr;
     }
 
     if (oxygenLevel >= 96 && oxygenLevel <= 97) {
       //oxygenState = 'Healthy';
-      oxygenState = 'above_average'.tr;
+      oxygenState = 'normal'.tr;
     }
 
     if (oxygenLevel >= 95 && oxygenLevel <= 96) {
@@ -2100,15 +2105,15 @@ class DashboardController extends BaseController
     // Blood pressure
 
     if (bloodPressure >= 118 && bloodPressure <= 122) {
-      bpState = 'good'.tr;
+      bpState = 'normal'.tr;
     }
 
     if (bloodPressure >= 116 && bloodPressure <= 118) {
-      bpState = 'above_average'.tr;
+      bpState = 'normal'.tr;
     }
 
     if (bloodPressure >= 122 && bloodPressure <= 124) {
-      bpState = 'above_average'.tr;
+      bpState = 'normal'.tr;
     }
 
     if (bloodPressure >= 114 && bloodPressure <= 116) {
@@ -2142,17 +2147,17 @@ class DashboardController extends BaseController
     } else if (hrv >= 50 && hrv < 100) {
       hrvState = 'average'.tr;
     } else if (hrv >= 100) {
-      hrvState = 'above_average'.tr;
+      hrvState = 'normal'.tr;
     }
 
     //
 
-    if (hrState == 'Excellent' ||
+    if (hrState == 'normal' ||
         hrState == 'very_healthy'.tr ||
-        hrState == 'Athlete') {
+        hrState == 'normal') {
       hrPoints = 100;
       hrTag = 'very_healthy'.tr;
-    } else if (hrState == 'great'.tr || hrState == 'above_average'.tr) {
+    } else if (hrState == 'normal'.tr || hrState == 'normal'.tr) {
       hrPoints = 80;
       hrTag = 'healthy'.tr;
     } else if (hrState == 'average'.tr) {
@@ -2161,7 +2166,7 @@ class DashboardController extends BaseController
     } else if (hrState == 'below_average'.tr || hrState == 'below_average'.tr) {
       hrPoints = 40;
       hrTag = 'unhealthy'.tr;
-    } else if (hrState == 'above_average'.tr) {
+    } else if (hrState == 'normal'.tr) {
       hrPoints = 20;
       hrTag = 'very_unhealthy'.tr;
     }
@@ -2187,6 +2192,48 @@ class DashboardController extends BaseController
     }
   }
 
+  void calculateStrokeVolume(
+      {required String bp, required double hr, required double hrv}) {
+    String sys = bp.substring(0, bp.indexOf('/'));
+    String dys = bp.substring(bp.indexOf('/') + '/'.length, bp.length);
+    double pulsePress =
+        double.parse(sys).roundToDouble() - double.parse(dys).roundToDouble();
+
+    double k1 = 1.75 * 30;
+    double k2 = 200;
+    printf('pulse----->$pulsePress');
+    printf('hr----->$hr');
+    printf('hrv----->$hrv');
+    double sv =
+        (pulsePress * k1 * (1 + (hrv / k2))) / hr; //stroke volume formulaS
+
+    printf('stroke ----->$sv');
+    strokeVolume = sv.toString();
+    if (sv <= 35) {
+      strokeMsg = 'low'.tr;
+    }
+    if (sv > 65) {
+      strokeMsg = 'high'.tr;
+    }
+    if (sv > 35 && sv <= 65) {
+      strokeMsg = 'normal'.tr;
+    }
+
+//cardiac output
+    double co = (sv * hr) / 1000; //cardiac output formula
+    cardiacOutput = co.toString();
+    printf('$co');
+    if (co <= 5.5) {
+      cardiacMsg = 'low'.tr;
+    }
+    if (co > 7.5) {
+      cardiacMsg = 'high'.tr;
+    }
+    if (co > 5.5 && co <= 7.5) {
+      cardiacMsg = 'normal'.tr;
+    }
+  }
+
   //
   void getPulsePressure({required String bp}) {
     printf(
@@ -2199,6 +2246,7 @@ class DashboardController extends BaseController
 
     double pulse =
         double.parse(sys).roundToDouble() - double.parse(dys).roundToDouble();
+    // double pulse = 55;
 
     pulsePressure = pulse.toString();
 
@@ -2208,36 +2256,14 @@ class DashboardController extends BaseController
       printf('exe-pulse-$e');
     }
 
-    if (pulse <= 20 || pulse >= 60) {
-      pulseMessage = 'bad'.tr;
+    if (pulse <= 35) {
+      pulseMessage = 'Low'.tr;
     }
-
-    if (pulse >= 20 && pulse <= 25 || pulse >= 55 && pulse <= 60) {
-      pulseMessage = 'below_average'.tr;
+    if (pulse >= 45) {
+      pulseMessage = 'High'.tr;
     }
-
-    if (pulse >= 25 && pulse <= 30 || pulse >= 50 && pulse <= 55) {
-      pulseMessage = 'average'.tr;
-    }
-
-    if (pulse >= 30 && pulse <= 35 || pulse >= 45 && pulse <= 50) {
-      pulseMessage = 'above_average'.tr;
-    }
-
     if (pulse > 35 && pulse <= 45) {
-      pulseMessage = 'good'.tr;
-    }
-
-    if (pulse < 30) {
-      strokeMsg = 'low'.tr; //AppConstants.low;
-    }
-
-    if (pulse < 50 && pulse >= 30) {
-      strokeMsg = 'normal'.tr; //AppConstants.medium;
-    }
-
-    if (pulse >= 50) {
-      strokeMsg = 'high'.tr; // AppConstants.high;
+      pulseMessage = 'Normal'.tr;
     }
 
     update();
@@ -2250,41 +2276,21 @@ class DashboardController extends BaseController
     //logFile('-----arterial---pressure-----$dys---$pulse');
 
     double map = dys + (1 / 3 * pulse).toInt();
+    // double map = 115;
 
     // printf('----map--value--$map');
 
     arterialPressure = map.toString();
-
-    if (map <= 55 || map >= 115) {
-      arterialMessage = 'bad'.tr;
-    }
-
-    if (map >= 55 && map <= 65 || map >= 105 && map <= 115) {
-      arterialMessage = 'below_average'.tr;
-    }
-
-    if (map >= 65 && map <= 70 || map >= 100 && map <= 105) {
-      arterialMessage = 'average'.tr;
-    }
-
-    if (map >= 70 && map <= 77 || map >= 93 && map <= 100) {
-      arterialMessage = 'above_average'.tr;
-    }
-
-    if (map >= 77 && map <= 93) {
-      arterialMessage = 'good'.tr;
+    if (map >= 70 && map <= 100) {
+      arterialMessage = 'normal'.tr;
     }
 
     if (map < 70) {
-      cardiacMsg = 'low'.tr; //AppConstants.low;
-    }
-
-    if (map <= 100 && map >= 70) {
-      cardiacMsg = 'normal'.tr; //AppConstants.medium;
+      arterialMessage = 'low'.tr; //AppConstants.low;
     }
 
     if (map > 100) {
-      cardiacMsg = 'high'.tr; // AppConstants.high;
+      arterialMessage = 'high'.tr; // AppConstants.high;
     }
 
     update();
@@ -3753,7 +3759,7 @@ class DashboardController extends BaseController
 
       if ((highestHR - avgHR) > 15) {
         heartRateContent =
-            "Your heart rate is fluctuating widely, which could be a sign of arrhythmia or sleep disturbances. It might be a good idea to consult with a healthcare provider for further evaluation.";
+            "Your heart rate is fluctuating widely, which could be a sign of arrhythmia or sleep disturbances. It might be a normal idea to consult with a healthcare provider for further evaluation.";
       } else {
         // Check the different conditions
         if (avgHR > 80) {
@@ -3761,10 +3767,10 @@ class DashboardController extends BaseController
               "Your heart rate has been consistently very high, which may indicate that you're feeling stressed or overexerted. Consider taking some time to relax and recharge.";
         } else if (avgHR < 60) {
           heartRateContent =
-              "Your heart rate has been consistently low, which might indicate underactive heart function. It’s a good idea to check in with a healthcare provider to ensure everything is on track.";
+              "Your heart rate has been consistently low, which might indicate underactive heart function. It’s a normal idea to check in with a healthcare provider to ensure everything is on track.";
         } else if (avgHR >= 60 && avgHR < 75) {
           heartRateContent =
-              "Your heart rate is consistently stable, reflecting good cardiac health. Keep up the healthy habits!";
+              "Your heart rate is consistently stable, reflecting normal cardiac health. Keep up the healthy habits!";
         } else if (avgHR >= 75 && avgHR <= 80) {
           heartRateContent =
               "Your heart rate has been slightly elevated, which might suggest mild stress or increased activity. It could be helpful to monitor how you're feeling and consider light relaxation if needed.";
@@ -3786,7 +3792,7 @@ class DashboardController extends BaseController
       } else {
         if (avgHRV > 80) {
           hrvContent =
-              "Your heart rate variability is consistently high, signaling excellent recovery and minimal stress—you're in great shape!";
+              "Your heart rate variability is consistently high, signaling normal recovery and minimal stress—you're in normal shape!";
         } else if (avgHRV < 50) {
           hrvContent =
               "Your heart rate variability has been decreasing under unhealthy levels, suggesting that you might be experiencing high stress or poor recovery. It's important to prioritize rest and manage stress effectively.";
@@ -3795,7 +3801,7 @@ class DashboardController extends BaseController
               "Your HRV is stable but on the lower side, indicating that you might be managing stress but still feeling its effects. Consider incorporating stress-relief practices into your routine.";
         } else if (avgHRV >= 75 && avgHRV <= 80) {
           hrvContent =
-              "Your HRV is increasing, which suggests you're recovering well and experiencing low stress. Keep up the great work for continued good health";
+              "Your HRV is increasing, which suggests you're recovering well and experiencing low stress. Keep up the normal work for continued normal health";
         }
       }
       //
@@ -3817,10 +3823,10 @@ class DashboardController extends BaseController
               "Your blood pressure has been consistently high, which increases your risk of hypertension. Consider managing stress and reviewing your lifestyle for better heart health.";
         } else if (avgSystolic > 126) {
           sysContent =
-              "Your blood pressure is consistently on the higher side. This could indicate a risk for hypertension. It might be a good idea to monitor your health more closely and consider speaking with a healthcare professional.";
+              "Your blood pressure is consistently on the higher side. This could indicate a risk for hypertension. It might be a normal idea to monitor your health more closely and consider speaking with a healthcare professional.";
         } else if (avgSystolic > 117 && avgSystolic < 123) {
           sysContent =
-              "Your blood pressure is consistently within a healthy range, indicating strong cardiovascular health. Keep maintaining those great habits!.";
+              "Your blood pressure is consistently within a healthy range, indicating strong cardiovascular health. Keep maintaining those normal habits!.";
         } else if (avgSystolic <= 117) {
           sysContent =
               "Your systolic pressure is consistently low, which might suggest a risk of hypotension. Consider consulting a healthcare professional to ensure your blood pressure remains in a healthy range.";
@@ -3850,7 +3856,7 @@ class DashboardController extends BaseController
         }
         if (avgDia >= 76 && avgDia <= 82) {
           dysContent =
-              "Your diastolic pressure is consistently within a healthy range, signaling good heart health. Keep up the excellent work with your lifestyle choices!";
+              "Your diastolic pressure is consistently within a healthy range, signaling normal heart health. Keep up the normal work with your lifestyle choices!";
         }
         if (avgDia >= 85) {
           dysContent =
@@ -4983,7 +4989,7 @@ class DashboardController extends BaseController
 
       if ((highestHR - avgHR) > 15) {
         heartRateContent =
-            "Your heart rate is fluctuating widely, which could be a sign of arrhythmia or sleep disturbances. It might be a good idea to consult with a healthcare provider for further evaluation.";
+            "Your heart rate is fluctuating widely, which could be a sign of arrhythmia or sleep disturbances. It might be a normal idea to consult with a healthcare provider for further evaluation.";
       } else {
         // Check the different conditions
         if (avgHR > 80) {
@@ -4991,10 +4997,10 @@ class DashboardController extends BaseController
               "Your heart rate has been consistently very high, which may indicate that you're feeling stressed or overexerted. Consider taking some time to relax and recharge.";
         } else if (avgHR < 60) {
           heartRateContent =
-              "Your heart rate has been consistently low, which might indicate underactive heart function. It’s a good idea to check in with a healthcare provider to ensure everything is on track.";
+              "Your heart rate has been consistently low, which might indicate underactive heart function. It’s a normal idea to check in with a healthcare provider to ensure everything is on track.";
         } else if (avgHR >= 60 && avgHR < 75) {
           heartRateContent =
-              "Your heart rate is consistently stable, reflecting good cardiac health. Keep up the healthy habits!";
+              "Your heart rate is consistently stable, reflecting normal cardiac health. Keep up the healthy habits!";
         } else if (avgHR >= 75 && avgHR <= 80) {
           heartRateContent =
               "Your heart rate has been slightly elevated, which might suggest mild stress or increased activity. It could be helpful to monitor how you're feeling and consider light relaxation if needed.";
@@ -5018,7 +5024,7 @@ class DashboardController extends BaseController
       } else {
         if (avgHRV > 80) {
           hrvContent =
-              "Your heart rate variability is consistently high, signaling excellent recovery and minimal stress—you're in great shape!";
+              "Your heart rate variability is consistently high, signaling normal recovery and minimal stress—you're in normal shape!";
         } else if (avgHRV < 50) {
           hrvContent =
               "Your heart rate variability has been decreasing under unhealthy levels, suggesting that you might be experiencing high stress or poor recovery. It's important to prioritize rest and manage stress effectively.";
@@ -5027,7 +5033,7 @@ class DashboardController extends BaseController
               "Your HRV is stable but on the lower side, indicating that you might be managing stress but still feeling its effects. Consider incorporating stress-relief practices into your routine.";
         } else if (avgHRV >= 75 && avgHRV <= 80) {
           hrvContent =
-              "Your HRV is increasing, which suggests you're recovering well and experiencing low stress. Keep up the great work for continued good health";
+              "Your HRV is increasing, which suggests you're recovering well and experiencing low stress. Keep up the normal work for continued normal health";
         }
       }
       //
@@ -5049,10 +5055,10 @@ class DashboardController extends BaseController
               "Your blood pressure has been consistently high, which increases your risk of hypertension. Consider managing stress and reviewing your lifestyle for better heart health.";
         } else if (avgSystolic > 126) {
           sysContent =
-              "Your blood pressure is consistently on the higher side. This could indicate a risk for hypertension. It might be a good idea to monitor your health more closely and consider speaking with a healthcare professional.";
+              "Your blood pressure is consistently on the higher side. This could indicate a risk for hypertension. It might be a normal idea to monitor your health more closely and consider speaking with a healthcare professional.";
         } else if (avgSystolic > 117 && avgSystolic < 123) {
           sysContent =
-              "Your blood pressure is consistently within a healthy range, indicating strong cardiovascular health. Keep maintaining those great habits!.";
+              "Your blood pressure is consistently within a healthy range, indicating strong cardiovascular health. Keep maintaining those normal habits!.";
         } else if (avgSystolic <= 117) {
           sysContent =
               "Your systolic pressure is consistently low, which might suggest a risk of hypotension. Consider consulting a healthcare professional to ensure your blood pressure remains in a healthy range.";
@@ -5082,7 +5088,7 @@ class DashboardController extends BaseController
         }
         if (avgDia >= 76 && avgDia <= 82) {
           dysContent =
-              "Your diastolic pressure is consistently within a healthy range, signaling good heart health. Keep up the excellent work with your lifestyle choices!";
+              "Your diastolic pressure is consistently within a healthy range, signaling normal heart health. Keep up the normal work with your lifestyle choices!";
         }
         if (avgDia >= 85) {
           dysContent =
@@ -5246,7 +5252,7 @@ class DashboardController extends BaseController
           if (avgHR < 60) {
             return 'Low';
           } else if (hr <= 80) {
-            return 'Normal';
+            return 'normal';
           } else {
             return 'High';
           }
@@ -5257,7 +5263,7 @@ class DashboardController extends BaseController
           if (avgHRV < 60) {
             return 'Low';
           } else if (hrv <= 80) {
-            return 'Normal';
+            return 'normal';
           } else {
             return 'High';
           }
@@ -5268,7 +5274,7 @@ class DashboardController extends BaseController
           if (systolic < 118) {
             return 'Low';
           } else if (systolic <= 122) {
-            return 'Normal';
+            return 'normal';
           } else {
             return 'High';
           }
@@ -5285,106 +5291,106 @@ class DashboardController extends BaseController
           title = "Low HR, Low HRV, Low BP";
           content =
               "You might be feeling tired or lightheaded, could be due to underlying issues or insufficient hydration.";
-        } else if (hrCat == 'Low' && hrvCat == 'Low' && bpCat == 'Normal') {
-          title = "Low HR, Low HRV, Normal BP";
+        } else if (hrCat == 'Low' && hrvCat == 'Low' && bpCat == 'normal') {
+          title = "Low HR, Low HRV, normal BP";
           content =
               "You might be feeling fatigued or sluggish, could be due to overtraining or chronic stress.";
         } else if (hrCat == 'Low' && hrvCat == 'Low' && bpCat == 'High') {
           title = "Low HR, Low HRV, High BP";
           content =
               "You might be feeling somewhat off or weak, could be due to medications or cardiovascular concerns.";
-        } else if (hrCat == 'Low' && hrvCat == 'Normal' && bpCat == 'Low') {
-          title = "Low HR, Normal HRV, Low BP";
+        } else if (hrCat == 'Low' && hrvCat == 'normal' && bpCat == 'Low') {
+          title = "Low HR, normal HRV, Low BP";
           content =
               "You might be feeling dizzy if you stand quickly, could be due to athletic adaptation or mild hypotension.";
-        } else if (hrCat == 'Low' && hrvCat == 'Normal' && bpCat == 'Normal') {
-          title = "Low HR, Normal HRV, Normal BP";
+        } else if (hrCat == 'Low' && hrvCat == 'normal' && bpCat == 'normal') {
+          title = "Low HR, normal HRV, normal BP";
           content =
-              "You might be feeling generally normal, could be due to good fitness if no other symptoms.";
-        } else if (hrCat == 'Low' && hrvCat == 'Normal' && bpCat == 'High') {
-          title = "Low HR, Normal HRV, High BP";
+              "You might be feeling generally normal, could be due to normal fitness if no other symptoms.";
+        } else if (hrCat == 'Low' && hrvCat == 'normal' && bpCat == 'High') {
+          title = "Low HR, normal HRV, High BP";
           content =
               "You might be feeling no major symptoms, could be due to medication or unique physiology.";
         } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'Low') {
           title = "Low HR, High HRV, Low BP";
           content =
-              "You might be feeling occasional dizziness, could be due to excellent fitness or certain meds.";
-        } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'Normal') {
-          title = "Low HR, High HRV, Normal BP";
+              "You might be feeling occasional dizziness, could be due to normal fitness or certain meds.";
+        } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'normal') {
+          title = "Low HR, High HRV, normal BP";
           content =
               "You might be feeling calm and well, could be due to strong cardiovascular fitness.";
         } else if (hrCat == 'Low' && hrvCat == 'High' && bpCat == 'High') {
           title = "Low HR, High HRV, High BP";
           content =
               "You might be feeling fairly normal, could be due to medication or mixed cardiovascular factors.";
-        } else if (hrCat == 'Normal' && hrvCat == 'Low' && bpCat == 'Low') {
-          title = "Normal HR, Low HRV, Low BP";
+        } else if (hrCat == 'normal' && hrvCat == 'Low' && bpCat == 'Low') {
+          title = "normal HR, Low HRV, Low BP";
           content =
               "You might be feeling lightheaded or fatigued, could be due to stress, dehydration, or poor recovery.";
-        } else if (hrCat == 'Normal' && hrvCat == 'Low' && bpCat == 'Normal') {
-          title = "Normal HR, Low HRV, Normal BP";
+        } else if (hrCat == 'normal' && hrvCat == 'Low' && bpCat == 'normal') {
+          title = "normal HR, Low HRV, normal BP";
           content =
               "You might be feeling tense or tired, could be due to stress or insufficient rest.";
-        } else if (hrCat == 'Normal' && hrvCat == 'Low' && bpCat == 'High') {
-          title = "Normal HR, Low HRV, High BP";
+        } else if (hrCat == 'normal' && hrvCat == 'Low' && bpCat == 'High') {
+          title = "normal HR, Low HRV, High BP";
           content =
               "You might be feeling on edge or stressed, could be due to chronic stress or lifestyle factors.";
-        } else if (hrCat == 'Normal' && hrvCat == 'Normal' && bpCat == 'Low') {
-          title = "Normal HR, Normal HRV, Low BP";
+        } else if (hrCat == 'normal' && hrvCat == 'normal' && bpCat == 'Low') {
+          title = "normal HR, normal HRV, Low BP";
           content =
               "You might be feeling mostly okay with occasional dizziness, could be due to normal variation.";
-        } else if (hrCat == 'Normal' &&
-            hrvCat == 'Normal' &&
-            bpCat == 'Normal') {
-          title = "Normal HR, Normal HRV, Normal BP";
+        } else if (hrCat == 'normal' &&
+            hrvCat == 'normal' &&
+            bpCat == 'normal') {
+          title = "normal HR, normal HRV, normal BP";
           content =
-              "You might be feeling healthy and balanced, could be due to a good overall lifestyle.";
-        } else if (hrCat == 'Normal' && hrvCat == 'Normal' && bpCat == 'High') {
-          title = "Normal HR, Normal HRV, High BP";
+              "You might be feeling healthy and balanced, could be due to a normal overall lifestyle.";
+        } else if (hrCat == 'normal' && hrvCat == 'normal' && bpCat == 'High') {
+          title = "normal HR, normal HRV, High BP";
           content =
               "You might be feeling fine, could be due to mild hypertension or stress.";
-        } else if (hrCat == 'Normal' && hrvCat == 'High' && bpCat == 'Low') {
-          title = "Normal HR, High HRV, Low BP";
+        } else if (hrCat == 'normal' && hrvCat == 'High' && bpCat == 'Low') {
+          title = "normal HR, High HRV, Low BP";
           content =
-              "You might be feeling generally good with possible mild dizziness, could be due to strong fitness.";
-        } else if (hrCat == 'Normal' && hrvCat == 'High' && bpCat == 'Normal') {
-          title = "Normal HR, High HRV, Normal BP";
+              "You might be feeling generally normal with possible mild dizziness, could be due to strong fitness.";
+        } else if (hrCat == 'normal' && hrvCat == 'High' && bpCat == 'normal') {
+          title = "normal HR, High HRV, normal BP";
           content =
-              "You might be feeling relaxed and healthy, could be due to good cardiovascular adaptability.";
-        } else if (hrCat == 'Normal' && hrvCat == 'High' && bpCat == 'High') {
-          title = "Normal HR, High HRV, High BP";
+              "You might be feeling relaxed and healthy, could be due to normal cardiovascular adaptability.";
+        } else if (hrCat == 'normal' && hrvCat == 'High' && bpCat == 'High') {
+          title = "normal HR, High HRV, High BP";
           content =
               "You might be feeling normal, could be due to acute stress or ‘white-coat’ effect.";
         } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'Low') {
           title = "High HR, Low HRV, Low BP";
           content =
               "You might be feeling shaky or weak, could be due to dehydration or shock-like state.";
-        } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'Normal') {
-          title = "High HR, Low HRV, Normal BP";
+        } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'normal') {
+          title = "High HR, Low HRV, normal BP";
           content =
               "You might be feeling anxious or overworked, could be due to overexertion or poor recovery.";
         } else if (hrCat == 'High' && hrvCat == 'Low' && bpCat == 'High') {
           title = "High HR, Low HRV, High BP";
           content =
               "You might be feeling tense or stressed, could be due to significant cardiovascular strain.";
-        } else if (hrCat == 'High' && hrvCat == 'Normal' && bpCat == 'Low') {
-          title = "High HR, Normal HRV, Low BP";
+        } else if (hrCat == 'High' && hrvCat == 'normal' && bpCat == 'Low') {
+          title = "High HR, normal HRV, Low BP";
           content =
               "You might be feeling faint or dizzy, could be due to volume depletion or acute stress.";
-        } else if (hrCat == 'High' && hrvCat == 'Normal' && bpCat == 'Normal') {
-          title = "High HR, Normal HRV, Normal BP";
+        } else if (hrCat == 'High' && hrvCat == 'normal' && bpCat == 'normal') {
+          title = "High HR, normal HRV, normal BP";
           content =
               "You might be feeling anxious or overheated, could be due to recent activity or stimulants.";
-        } else if (hrCat == 'High' && hrvCat == 'Normal' && bpCat == 'High') {
-          title = "High HR, Normal HRV, High BP";
+        } else if (hrCat == 'High' && hrvCat == 'normal' && bpCat == 'High') {
+          title = "High HR, normal HRV, High BP";
           content =
               "You might be feeling tense, could be due to acute stress, hypertension, or anxiety.";
         } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'Low') {
           title = "High HR, High HRV, Low BP";
           content =
               "You might be feeling a rush or jittery, could be due to sudden stress or shock response.";
-        } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'Normal') {
-          title = "High HR, High HRV, Normal BP";
+        } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'normal') {
+          title = "High HR, High HRV, normal BP";
           content =
               "You might be feeling energized or restless, could be due to exercise or emotional excitement.";
         } else if (hrCat == 'High' && hrvCat == 'High' && bpCat == 'High') {
@@ -5461,7 +5467,7 @@ class DashboardController extends BaseController
     isSevereThinness = false;
     isModerateThinness = false;
     isMildThinness = false;
-    isNormalThinness = false;
+    isnormalThinness = false;
     isOverWeightThinness = false;
     isObeseClass = false;
     isObeseClass2 = false;
@@ -5483,11 +5489,11 @@ class DashboardController extends BaseController
       isMildThinness = true;
       bmiMessage = 'average'.tr; // bmiMessage = 'mild_thinness'.tr;
     } else if (bmiValue >= 18.5 && bmiValue < 25) {
-      isNormalThinness = true;
+      isnormalThinness = true;
       bmiMessage = 'normal'.tr;
     } else if (bmiValue >= 25 && bmiValue < 30) {
       isOverWeightThinness = true;
-      bmiMessage = 'very_good'.tr; // bmiMessage = 'over_weight'.tr;
+      bmiMessage = 'very_normal'.tr; // bmiMessage = 'over_weight'.tr;
     } else if (bmiValue >= 30 && bmiValue < 35) {
       isObeseClass = true;
       bmiMessage = 'average'.tr; // bmiMessage = 'obese_class1'.tr;
@@ -5555,7 +5561,10 @@ class DashboardController extends BaseController
                 bodyHealth = lastRecord.bodyHealth.toString();
 
                 getPulsePressure(bp: bloodPressure);
-
+                calculateStrokeVolume(
+                    bp: bloodPressure,
+                    hr: double.parse(heartRate.toString()),
+                    hrv: double.parse(hrVariability.toString()));
                 try {
                   newHealthTips = lastRecord.healthTips.toString();
                 } catch (e) {
@@ -5622,7 +5631,9 @@ class DashboardController extends BaseController
   }
 
   double calculateHeartStrain(
-      {required double hrv, required String bloodPressure}) {
+      {required double hrv,
+      required String bloodPressure,
+      required double hr}) {
     List<String> parts = bloodPressure.split('/');
     int sysBP = int.parse(parts[0]);
     int diaBP = int.parse(parts[1]);
@@ -5645,30 +5656,44 @@ class DashboardController extends BaseController
     if (diaBP < 70) {
       diaBP = 70;
     }
+    double k1 = 1.75 * 30;
+    double k2 = 200;
+    String sys = bloodPressure.substring(0, bloodPressure.indexOf('/'));
+    String dys = bloodPressure.substring(
+        bloodPressure.indexOf('/') + '/'.length, bloodPressure.length);
 
+    double pulsePressure =
+        double.parse(sys).roundToDouble() - double.parse(dys).roundToDouble();
+
+    // double cardiacStrain = ((pulsePressure * k1) / hr) * (1 - (hrv / k2));
+    double cardiacStrain =
+        ((double.parse(sys).roundToDouble() * hr) / 20000) * 100;
+    printf('########cardiacStrain--->$cardiacStrain');
     printf(
         '<--########-----------------call----------calculateHeartStrain-------hrv->$hrv---sys->$sysBP--dia->$diaBP');
-    const int hrvNormal = 100;
-    const int bpSystolicNormal = 120;
-    const int bpDiastolicNormal = 80;
+    const int hrvnormal = 100;
+    const int bpSystolicnormal = 120;
+    const int bpDiastolicnormal = 80;
     double strain = 0.0;
+
+    strain = cardiacStrain;
 
     // Calculate HRV-based strain (lower HRV increases strain)
 
-    strain += (hrvNormal - hrv).abs(); // Max 50% strain from HRV
+    // strain += (hrvnormal - hrv).abs(); // Max 50% strain from HRV
 
-    // Calculate BP-based strain (higher BP increases strain)
+    // // Calculate BP-based strain (higher BP increases strain)
 
-    strain += (sysBP - bpSystolicNormal).abs() * 10;
+    // strain += (sysBP - bpSystolicnormal).abs() * 10;
 
-    strain += (diaBP - bpDiastolicNormal).abs() * 10;
+    // strain += (diaBP - bpDiastolicnormal).abs() * 10;
 
     // Cap the strain percentage at 100%
     if (strain >= 300) {
       strain = 300;
     }
-
-    return strain / 3;
+    printf('$strain');
+    return strain;
   }
 
   void logFile(String logMsg) {
