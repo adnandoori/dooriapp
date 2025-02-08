@@ -13,8 +13,10 @@ import 'package:doori_mobileapp/widgets/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({Key? key}) : super(key: key);
@@ -24,13 +26,38 @@ class MyProfileScreen extends StatefulWidget {
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
   Uint8List? _image;
-  void selectImage() async {
+
+  Future<void> _pickImage() async {
     Uint8List? img = await ImageUpload().pickImage(ImageSource.gallery);
-    if (img != null) {
+    final ImagePicker picker = ImagePicker();
+
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
       setState(() {
         _image = img;
       });
     }
+  }
+
+  Future<void> _saveImage() async {
+    if (_image == null) return;
+
+    final directory = await getApplicationDocumentsDirectory();
+
+    final String fileName =
+        DateTime.now().millisecondsSinceEpoch.toString() + '.png';
+    final String localPath = '${directory.path}/$fileName';
+
+    final List<int> imageBytes = await _image!;
+
+    final File localImage = File(localPath);
+    await localImage.writeAsBytes(imageBytes);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Image saved to $localPath')),
+    );
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -85,24 +112,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                       fit: BoxFit.fill,
                                     ),
                                   ),
-                            Positioned(
-                                child: InkWell(
-                              onTap: () {
-                                selectImage();
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  color: Colors.white,
-                                  size: 30.sp,
-                                ),
-                              ),
-                            )),
                             SizedBox(
                               height: 10.h,
                             ),

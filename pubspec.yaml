@@ -67,7 +67,7 @@ dependencies:
   pdf:
   printing:
   google_fonts:
-  path_provider:
+  path_provider: ^2.0.11
   share_plus:
   # screenshot: ^2.0.0
   #For ios build version 1.3.0

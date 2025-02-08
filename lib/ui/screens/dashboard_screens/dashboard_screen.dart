@@ -2340,28 +2340,36 @@ Widget widgetMyVitals(DashboardController controller) {
       SizedBox(
         height: 20.h,
       ),
+      // InkWell(
+      //   onTap: () async {
+      //     AisensyService aisensyService = AisensyService();
+      //     await aisensyService.sendWhatsAppMessage('phone_number', 'message');
+      //   },
+      //   child: Container(
+      //     width: 110.w,
+      //     height: 42.h,
+      //     decoration: BoxDecoration(
+      //       borderRadius: BorderRadius.all(Radius.circular(28.w)),
+      //       border: Border.all(
+      //         color: Colors.blue,
+      //         width: 1,
+      //       ),
+      //       color: Colors.transparent, //HexColor('#E3F7FF'),
+      //     ),
+      //     child: Center(
+      //       child: Text(
+      //         'whatsapp',
+      //         style: defaultTextStyle(
+      //           size: 13.sp,
+      //           color: Colors.blue,
+      //           fontWeight: FontWeight.w500,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
     ],
   );
-}
-
-class WhatsappButton extends StatelessWidget {
-  final AisensyService aisensyService = AisensyService();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            // Send a message to a specific phone number
-            await aisensyService.sendWhatsAppMessage(
-                '1234567890', 'Hello from my Flutter app!');
-          },
-          child: Text('Send WhatsApp Message'),
-        ),
-      ),
-    );
-  }
 }
 
 Widget widgetInsights(DashboardController controller) {
